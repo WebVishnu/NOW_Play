@@ -1,0 +1,31 @@
+.my-root {
+    --primary-color: #2AB3C0;
+    --secondary-color: #F8BC78;
+    --purple-color: #9178BE;
+    --black-color: #000000;
+    --white-color: #ffffff;
+    --light-grey: #7D7D7D;
+    --border-width: 4px
+  }
+  $colours: ("primary":var(--primary-color),
+  "secondary":var(--secondary-color),
+  "white":var(--white-color),
+  "purple":var(--purple-color),
+  "light_grey":var(--light-grey));
+  
+@each $name,
+$colour in $colours {
+    .overlay_fixed_border_#{$name} {
+        box-shadow: 5px 5px 0px -1px $colour, 5px 5px 0px 2px rgba(0, 0, 0, 1);
+        border-radius: 10px;
+    }
+    .overlay_am_border_#{$name} {
+        box-shadow: 0px 0px 0px -1px $colour, 0px 0px 0px 2px rgba(0, 0, 0, 0);
+        border-radius: 10px;
+        transition: all 0.3s ease-in-out;
+    }
+    .overlay_am_border_#{$name}:hover {
+        box-shadow: 5px 5px 0px -1px $colour, 5px 5px 0px 2px rgba(0, 0, 0, 1);
+        border-radius: 10px;
+    }
+}

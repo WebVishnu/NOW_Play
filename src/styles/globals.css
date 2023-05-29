@@ -3,25 +3,55 @@
 @tailwind utilities;
 
 :root {
-  --foreground-rgb: 0, 0, 0;
-  --background-start-rgb: 214, 219, 220;
-  --background-end-rgb: 255, 255, 255;
+  --primary-color: #2AB3C0;
+  --secondary-color: #F8BC78;
+  --purple-color: #9178BE;
+  --black-color: #000000;
+  --white-color: #ffffff;
+  --light-grey: #7D7D7D;
+  --border-width: 4px;
+  --lg:1024px;
 }
 
-@media (prefers-color-scheme: dark) {
-  :root {
-    --foreground-rgb: 255, 255, 255;
-    --background-start-rgb: 0, 0, 0;
-    --background-end-rgb: 0, 0, 0;
-  }
+
+.nav-links ul li.active {
+  color: #404040;
 }
 
-body {
-  color: rgb(var(--foreground-rgb));
-  background: linear-gradient(
-      to bottom,
-      transparent,
-      rgb(var(--background-end-rgb))
-    )
-    rgb(var(--background-start-rgb));
+.nav-links ul li.active:before {
+  opacity: 1;
+}
+
+.nav-links ul li:before {
+  content: '';
+  height: 10px;
+  width: 100%;
+  background-color: var(--secondary-color);
+  position: absolute;
+  bottom: 2px;
+  z-index: -1;
+  opacity: 0;
+}
+
+
+/* Primary btn design */
+.primary-btn {
+  border: var(--border-width) solid #000;
+  border-radius: 10px;
+}
+
+/* Scroll bar */
+.scrollbar::-webkit-scrollbar {
+  width: 0.5em;
+}
+ 
+.scrollbar::-webkit-scrollbar-track {
+  box-shadow: inset 0 0 6px rgb(255, 255, 255);
+  background-color: #e9e9e9;
+}
+ 
+.scrollbar::-webkit-scrollbar-thumb {
+  background-color: rgb(71, 71, 71);
+  outline: 1px solid rgb(255, 255, 255);
+  border-radius: 2px;
 }

@@ -1,118 +1,121 @@
-import Image from 'next/image'
-import { Inter } from 'next/font/google'
+import { Dosis } from "next/font/google";
+import Music_Card , {formatTime} from "@/components/Music_Card";
+import Artist_Card from "@/components/Hz_Artist_Card";
+import Playbar from "@/components/Playbar";
+import Image from "next/image";
+import { useEffect, useState,useContext } from "react";
+import axios from "axios";
+import Hz_Artist_Card from "@/components/Hz_Artist_Card";
+import Album_Card_Skeleton from "@/components/Album_Card_Skeleton";
+import Layout from "@/components/Layout";
+import AppContext from "@/context/AppContext";
 
-const inter = Inter({ subsets: ['latin'] })
+const dosis = Dosis({ subsets: ["latin"], weight: ["600"] });
 
 export default function Home() {
+  const context =  useContext(AppContext)
+  // Global variables
+  let AllArtists = [];
+  let LoadingSkeletons = { songs: [], artists: [] };
+  
+  // use State variable
+  const [songs, setSongs] = useState(null);
+  const [loading, setLoading] = useState(true);
+
+  // use effect
+  useEffect(() => {
+    axios.get("/api/getAllSongs").then((res) => {
+      setSongs(res.data.slice(0,36));
+      setLoading(false);
+    });
+  }, []);
+  // Adding loading elements in a array
+  for (let i = 0; i < 12; i++) {
+    LoadingSkeletons.songs.push(
+      <div key={i}>
+        <Album_Card_Skeleton />
+      </div>
+    );
+    LoadingSkeletons.artists.push(
+      <div className="animate-pulse my-2" key={i}>
+        <div className="h-20 w-100 bg-gray-300 rounded-lg"></div>
+      </div>
+    );
+  }
+  //  ===================================
+  //  LOADING
+  //  ===================================
+  if (loading) {
+    return (
+        <div className="grid grid-cols-12 md:mt-12 mt-0">
+          <div className="2xl:col-span-8 xl:col-span-8 lg:col-span-7 col-span-12 flex md:justify-start justify-around flex-wrap mb-[10em]">
+            {LoadingSkeletons.songs.map((ele) => {
+              return ele;
+            })}
+          </div>
+          <div className="xl:col-span-4 lg:col-span-5 lg:flex hidden flex-col">
+            <div className="sticky top-[4em]">
+              <h1 className={`text-4xl mb-3 ${dosis.className}`}>
+                Top Artists
+              </h1>
+              <div className="overflow-auto h-[75vh] w-100 scrollbar mt-5">
+                {LoadingSkeletons.artists.map((ele,index) => {
+                  if(index < 6){
+                    return ele;
+                  }
+                })}
+              </div>
+            </div>
+          </div>
+        </div>
+    );
+  }
+
+  // =================================================================================================
+  // MAIN CONTENT
+  // =================================================================================================
+
   return (
-    <main
-      className={`flex min-h-screen flex-col items-center justify-between p-24 ${inter.className}`}
-    >
-      <div className="z-10 w-full max-w-5xl items-center justify-between font-mono text-sm lg:flex">
-        <p className="fixed left-0 top-0 flex w-full justify-center border-b border-gray-300 bg-gradient-to-b from-zinc-200 pb-6 pt-8 backdrop-blur-2xl dark:border-neutral-800 dark:bg-zinc-800/30 dark:from-inherit lg:static lg:w-auto lg:rounded-xl lg:border lg:bg-gray-200 lg:p-4 lg:dark:bg-zinc-800/30">
-          Get started by editing&nbsp;
-          <code className="font-mono font-bold">src/pages/index.js</code>
-        </p>
-        <div className="fixed bottom-0 left-0 flex h-48 w-full items-end justify-center bg-gradient-to-t from-white via-white dark:from-black dark:via-black lg:static lg:h-auto lg:w-auto lg:bg-none">
-          <a
-            className="pointer-events-none flex place-items-center gap-2 p-8 lg:pointer-events-auto lg:p-0"
-            href="https://vercel.com?utm_source=create-next-app&utm_medium=default-template-tw&utm_campaign=create-next-app"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            By{' '}
-            <Image
-              src="/vercel.svg"
-              alt="Vercel Logo"
-              className="dark:invert"
-              width={100}
-              height={24}
-              priority
-            />
-          </a>
+    <>
+      <div className="grid grid-cols-12 md:mt-12 mt-0">
+        <div className="2xl:col-span-8 xl:col-span-8 lg:col-span-7 col-span-12 flex md:justify-start justify-around flex-wrap mb-[10em]">
+          {songs &&
+            songs.map((song, index) => {
+              return (
+                <Music_Card
+                  key={index}
+                  name={song.songName}
+                  duration={song.duration}
+                  imgUrl={song.songCoverImg}
+                  previewUrl={song.previewUrl}
+                  setAudio={context.setAudio}
+                  audio={context.audio}
+                />
+              );
+            })}
+        </div>
+        <div className="xl:col-span-4 lg:col-span-5 lg:flex hidden flex-col">
+          <div className="sticky top-[4em]">
+            <h1 className={`text-4xl mb-3 ${dosis.className}`}>Top Artists</h1>
+            <div className="overflow-auto h-[75vh] scrollbar">
+              {songs &&
+                songs.map((artist, index) => {
+                  if (!AllArtists.includes(artist.artistName)) {
+                    AllArtists.push(artist.artistName);
+                    return (
+                      <Hz_Artist_Card
+                        key={index}
+                        name={`${artist.artistName}`}
+                        url={`${artist.artistImg}`}
+                        followers={`${artist.artistFollowers}`}
+                      />
+                    );
+                  }
+                })}
+            </div>
+          </div>
         </div>
       </div>
-
-      <div className="relative flex place-items-center before:absolute before:h-[300px] before:w-[480px] before:-translate-x-1/2 before:rounded-full before:bg-gradient-radial before:from-white before:to-transparent before:blur-2xl before:content-[''] after:absolute after:-z-20 after:h-[180px] after:w-[240px] after:translate-x-1/3 after:bg-gradient-conic after:from-sky-200 after:via-blue-200 after:blur-2xl after:content-[''] before:dark:bg-gradient-to-br before:dark:from-transparent before:dark:to-blue-700/10 after:dark:from-sky-900 after:dark:via-[#0141ff]/40 before:lg:h-[360px]">
-        <Image
-          className="relative dark:drop-shadow-[0_0_0.3rem_#ffffff70] dark:invert"
-          src="/next.svg"
-          alt="Next.js Logo"
-          width={180}
-          height={37}
-          priority
-        />
-      </div>
-
-      <div className="mb-32 grid text-center lg:mb-0 lg:grid-cols-4 lg:text-left">
-        <a
-          href="https://nextjs.org/docs?utm_source=create-next-app&utm_medium=default-template-tw&utm_campaign=create-next-app"
-          className="group rounded-lg border border-transparent px-5 py-4 transition-colors hover:border-gray-300 hover:bg-gray-100 hover:dark:border-neutral-700 hover:dark:bg-neutral-800/30"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <h2 className={`mb-3 text-2xl font-semibold`}>
-            Docs{' '}
-            <span className="inline-block transition-transform group-hover:translate-x-1 motion-reduce:transform-none">
-              -&gt;
-            </span>
-          </h2>
-          <p className={`m-0 max-w-[30ch] text-sm opacity-50`}>
-            Find in-depth information about Next.js features and API.
-          </p>
-        </a>
-
-        <a
-          href="https://nextjs.org/learn?utm_source=create-next-app&utm_medium=default-template-tw&utm_campaign=create-next-app"
-          className="group rounded-lg border border-transparent px-5 py-4 transition-colors hover:border-gray-300 hover:bg-gray-100 hover:dark:border-neutral-700 hover:dark:bg-neutral-800/30"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <h2 className={`mb-3 text-2xl font-semibold`}>
-            Learn{' '}
-            <span className="inline-block transition-transform group-hover:translate-x-1 motion-reduce:transform-none">
-              -&gt;
-            </span>
-          </h2>
-          <p className={`m-0 max-w-[30ch] text-sm opacity-50`}>
-            Learn about Next.js in an interactive course with&nbsp;quizzes!
-          </p>
-        </a>
-
-        <a
-          href="https://vercel.com/templates?framework=next.js&utm_source=create-next-app&utm_medium=default-template-tw&utm_campaign=create-next-app"
-          className="group rounded-lg border border-transparent px-5 py-4 transition-colors hover:border-gray-300 hover:bg-gray-100 hover:dark:border-neutral-700 hover:dark:bg-neutral-800/30"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <h2 className={`mb-3 text-2xl font-semibold`}>
-            Templates{' '}
-            <span className="inline-block transition-transform group-hover:translate-x-1 motion-reduce:transform-none">
-              -&gt;
-            </span>
-          </h2>
-          <p className={`m-0 max-w-[30ch] text-sm opacity-50`}>
-            Discover and deploy boilerplate example Next.js&nbsp;projects.
-          </p>
-        </a>
-
-        <a
-          href="https://vercel.com/new?utm_source=create-next-app&utm_medium=default-template-tw&utm_campaign=create-next-app"
-          className="group rounded-lg border border-transparent px-5 py-4 transition-colors hover:border-gray-300 hover:bg-gray-100 hover:dark:border-neutral-700 hover:dark:bg-neutral-800/30"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <h2 className={`mb-3 text-2xl font-semibold`}>
-            Deploy{' '}
-            <span className="inline-block transition-transform group-hover:translate-x-1 motion-reduce:transform-none">
-              -&gt;
-            </span>
-          </h2>
-          <p className={`m-0 max-w-[30ch] text-sm opacity-50`}>
-            Instantly deploy your Next.js site to a shareable URL with Vercel.
-          </p>
-        </a>
-      </div>
-    </main>
-  )
+      </>
+  );
 }
