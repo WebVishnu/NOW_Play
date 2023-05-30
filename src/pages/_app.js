@@ -7,12 +7,22 @@ import Navbar from "@/components/Navbar";
 import { HotKeys } from "react-hotkeys";
 import SearchArea from "@/components/SearchArea";
 import Playbar from "@/components/Playbar";
+import axios from "axios";
 
 export default function App({ Component, pageProps }) {
   const [showSearchArea, setShowSearchArea] = useState(false);
   const [audio, setAudio] = useState(null);
   const [showPlayer, setShowPlayer] = useState(false);
   const [isPlaying, setIsPlaying] = useState(false);
+  const [songs, setSongs] = useState(null);
+  // use effect
+  useEffect(() => {
+    axios.get("/api/getAllSongs").then((res) => {
+      setSongs(res.data);
+      console.log("loading")
+    });
+  }, []);
+
 
   useEffect(() => {
     if (audio) {
@@ -36,7 +46,7 @@ export default function App({ Component, pageProps }) {
         setShowPlayer,
         playSong:()=>{setIsPlaying(true);audio.url.play()},
         pauseSong:()=>{setIsPlaying(false);audio.url.pause()},
-        isPlaying,setIsPlaying
+        isPlaying,setIsPlaying,songs,setShowSearchArea
       }}
     >
       <Head>

@@ -1,26 +1,22 @@
-import React from "react";
+import React, { useContext } from "react";
 import { useState, useEffect } from "react";
 import axios from "axios";
 import Vt_Artist_Card from "@/components/Vt_Artist_Card";
 import Artist_Card_Skeleton from "@/components/Artist_Card_Skeleton";
+import AppContext from "@/context/AppContext";
 
 const artist = () => {
+  const context =  useContext(AppContext)
   let AllArtists = [];
-  const [artists, setArtists] = useState(null);
+  const artists = context.songs;
   const [loading, setLoading] = useState(true);
-  useEffect(() => {
-    const fetchArtist = async () => {
-      try {
-        const response = await axios.get("/api/getAllSongs");
-        setArtists(response.data);
-        setLoading(false);
-      } catch (error) {
-        console.log(error);
-      }
-    };
 
-    fetchArtist();
-  }, []);
+  useEffect(() => {
+    if (artists) {
+      setLoading(false);
+    }
+  }, [artists]);
+  
   if (loading) {
     return (
         <div className="flex md:justify-start justify-center flex-wrap md:mt-12 mt-0 mb-12">

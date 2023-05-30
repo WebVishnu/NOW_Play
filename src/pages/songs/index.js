@@ -1,22 +1,23 @@
 import Music_Card from "@/components/Music_Card";
 import React, { useState, useEffect, useContext } from "react";
-import axios from "axios";
+
 import Album_Card_Skeleton from "@/components/Album_Card_Skeleton";
 import AppContext from "@/context/AppContext";
 
 const Songs = () => {
   const context = useContext(AppContext);
+  let songs = context.songs
   // global variables
-  const [songs, setSongs] = useState(null);
   const [Loading, setLoading] = useState(true);
   let LoadingSkeletons = { songs: [] };
+
   // use effect
   useEffect(() => {
-    axios.get("/api/getAllSongs").then((res) => {
-      setSongs(res.data);
+    if (songs) {
       setLoading(false);
-    });
-  }, []);
+    }
+  }, [songs]);
+
   // Adding loading elements in a array
   for (let i = 0; i < 12; i++) {
     LoadingSkeletons.songs.push(
@@ -41,7 +42,7 @@ const Songs = () => {
   // MAIN CONTENT
   // =================================================================================================
   return (
-    <div className="flex md:justify-start justify-around flex-wrap md:mt-12 mt-0 mb-12">
+    <div className="flex md:justify-start justify-around flex-wrap md:mt-12 mt-0 pb-12">
       {songs &&
         songs.map((song, index) => {
           if (song) {

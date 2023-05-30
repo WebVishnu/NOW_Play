@@ -12,13 +12,25 @@ const Playbar = (props) => {
 
   useEffect(() => {
     startInterval();
-    if (seconds === 29) {
+    if (seconds === 28) {
       context.pauseSong();
       context.setShowPlayer(false);
       clearInterval(timer); // Clear the interval when the seconds reach 30
     }
     return () => clearInterval(timer);
   }, [seconds]);
+
+  useEffect(() => {
+    clearInterval(timer)
+    setSeconds(0)
+    startInterval()
+  }, [props.audio])
+  
+  function closePlayer(){
+    context.setShowPlayer(false);
+    context.pauseSong();
+    clearInterval(timer);
+  }
 
   function startInterval() {
     timer = setInterval(() => {
@@ -61,7 +73,9 @@ const Playbar = (props) => {
           </p>
         </div>
       </div>
-      <div className="cursor-pointer lg:flex hidden">
+      
+      <div className="text-3xl flex items-center me-4">
+      <div className="cursor-pointer lg:flex hidden me-5">
         <Image
         priority
           src={"/sound-unscreen.gif"}
@@ -103,12 +117,15 @@ const Playbar = (props) => {
           className="mx-1"
         />
       </div>
-      <div className="text-3xl flex items-center me-4">
         <i
           className={`bi bi-${
             context.isPlaying ? "pause" : "play"
           }-circle-fill mx-1 text-5xl hover:text-white cursor-pointer`}
           onClick={context.isPlaying ? pauseSong : playSong}
+        ></i>
+        <i
+          className={`bi bi-x text-5xl hover:text-white cursor-pointer`}
+          onClick={closePlayer}
         ></i>
       </div>
     </div>

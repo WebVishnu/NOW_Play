@@ -17,10 +17,6 @@ const navLinks = [
     name: "Songs",
     path: "/songs",
   },
-  // {
-  //   name: "Albums",
-  //   path: "/albums",
-  // },
   {
     name: "Artists",
     path: "/artists",
