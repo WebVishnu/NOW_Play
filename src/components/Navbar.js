@@ -59,12 +59,12 @@ const router = useRouter()
             className="w-full border-4 border-black rounded-tr-xl rounded-br-xl px-4 py-4 outline-0 text-2xl cursor-pointer"
           />
         </div>
-        <div className={`login ${inter.className} flex items-center text-xl`}>
+        {/* <div className={`login ${inter.className} flex items-center text-xl`}>
           <p className="mx-5 cursor-pointer">Login</p>
           <button className="primary-btn md:px-9 md:py-3 px-5 py-2 hover:bg-[var(--primary-color)] hover:text-white">
             Sign Up
           </button>
-        </div>
+        </div> */}
       </nav>
 
       <div
