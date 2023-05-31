@@ -21,6 +21,7 @@ export default function Home() {
   // use State variable
   const songs = context.songs;
   const [loading, setLoading] = useState(true);
+  // const [cssLoaded, setCssLoaded] = useState(false);
 
   // use effect
   useEffect(() => {

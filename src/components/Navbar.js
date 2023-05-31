@@ -93,7 +93,7 @@ const router = useRouter()
             className="w-full border-4 border-black rounded-tr-xl rounded-br-xl px-4 py-2 outline-0 text-2xl"
           />
         </div>
-        <div className={`nav-links text-lg ${dosis.className} md:mx-0 mx-auto`}>
+        <div className={`nav-links text-lg ${dosis.className} md:mx-0 ms-auto`}>
           <ul className="flex">
             {navLinks.map((link,index) => {
               return (
