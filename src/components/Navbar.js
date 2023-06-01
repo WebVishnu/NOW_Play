@@ -2,7 +2,8 @@ import React from "react";
 import Image from "next/image";
 import { Dosis, Inter, Salsa } from "next/font/google";
 import Link from "next/link";
-import { useRouter } from 'next/router'
+import { useRouter } from "next/router";
+import ProfileDropdownMenu from "./ProfileDropdownMenu";
 
 const dosis = Dosis({ subsets: ["latin"], weight: ["600"] });
 const inter = Inter({ subsets: ["latin"], weight: ["600"] });
@@ -24,8 +25,7 @@ const navLinks = [
 ];
 
 const Navbar = ({ handleShowSearchArea }) => {
-  
-const router = useRouter()
+  const router = useRouter();
   return (
     <>
       <nav className="flex justify-between items-center mt-7">
@@ -59,12 +59,9 @@ const router = useRouter()
             className="w-full border-4 border-black rounded-tr-xl rounded-br-xl px-4 py-4 outline-0 text-2xl cursor-pointer"
           />
         </div>
-        {/* <div className={`login ${inter.className} flex items-center text-xl`}>
-          <p className="mx-5 cursor-pointer">Login</p>
-          <button className="primary-btn md:px-9 md:py-3 px-5 py-2 hover:bg-[var(--primary-color)] hover:text-white">
-            Sign Up
-          </button>
-        </div> */}
+        <div className={`login ${inter.className} flex items-center text-xl`}>
+          <ProfileDropdownMenu />
+        </div>
       </nav>
 
       <div
@@ -95,9 +92,14 @@ const router = useRouter()
         </div>
         <div className={`nav-links text-lg ${dosis.className} md:mx-0 ms-auto`}>
           <ul className="flex">
-            {navLinks.map((link,index) => {
+            {navLinks.map((link, index) => {
               return (
-                <li key={index} className={`mx-4 relative text-[var(--light-grey)] hover:before:opacity-100 before:transition-all ${(router.asPath === link.path)?'active':''}`}>
+                <li
+                  key={index}
+                  className={`mx-4 relative text-[var(--light-grey)] hover:before:opacity-100 before:transition-all ${
+                    router.asPath === link.path ? "active" : ""
+                  }`}
+                >
                   <Link href={`${link.path}`}>{link.name}</Link>
                 </li>
               );

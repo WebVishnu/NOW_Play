@@ -10,9 +10,6 @@ const salsa = Salsa({ subsets: ["latin"], weight: ["400"] });
 const Music_Card = (props) => {
   const audio = props.audio
   const setAudio = props.setAudio
-  if(props.key==47){
-    props.setCssLoaded(true)
-  }
   const [randomClass, setRandomClass] = useState("primary");
   const [randomleft, setrandomLeft] = useState(0);
   let num = Math.floor(Math.random() * 80);

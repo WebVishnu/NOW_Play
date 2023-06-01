@@ -2,7 +2,7 @@
 const nextConfig = {
   reactStrictMode: true,
   images: {
-    domains: ['static.toiimg.com','shorturl.at','urlis.net','cdn.pixabay.com','i.scdn.co'],
+    domains: ['lh3.googleusercontent.com','static.toiimg.com','shorturl.at','urlis.net','cdn.pixabay.com','i.scdn.co'],
   },
 }
 

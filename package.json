@@ -21,6 +21,7 @@
     "keyboard-shortcut": "^1.2.0",
     "mousetrap": "^1.6.5",
     "next": "13.4.4",
+    "next-auth": "^4.22.1",
     "next-google-fonts": "^2.2.0",
     "node-sass": "^9.0.0",
     "postcss": "8.4.24",

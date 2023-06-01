@@ -1,9 +1,9 @@
 import React, { useContext } from "react";
 import { useState, useEffect } from "react";
-import axios from "axios";
+import AppContext from "@/context/AppContext";
+
 import Vt_Artist_Card from "@/components/Vt_Artist_Card";
 import Artist_Card_Skeleton from "@/components/Artist_Card_Skeleton";
-import AppContext from "@/context/AppContext";
 
 const artist = () => {
   const context =  useContext(AppContext)

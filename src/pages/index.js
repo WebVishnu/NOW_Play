@@ -1,18 +1,17 @@
 import { Dosis } from "next/font/google";
-import Music_Card, { formatTime } from "@/components/Music_Card";
-import Artist_Card from "@/components/Hz_Artist_Card";
-import Playbar from "@/components/Playbar";
-import Image from "next/image";
 import { useEffect, useState, useContext } from "react";
-import axios from "axios";
-import Hz_Artist_Card from "@/components/Hz_Artist_Card";
-import Album_Card_Skeleton from "@/components/Album_Card_Skeleton";
-import Layout from "@/components/Layout";
 import AppContext from "@/context/AppContext";
 
+import Music_Card from "@/components/Music_Card";
+import Hz_Artist_Card from "@/components/Hz_Artist_Card";
+import Album_Card_Skeleton from "@/components/Song_Card_Skeleton";
+
+// Fonts
 const dosis = Dosis({ subsets: ["latin"], weight: ["600"] });
 
+// Main function
 export default function Home() {
+
   const context = useContext(AppContext);
   // Global variables
   let AllArtists = [];
@@ -21,7 +20,6 @@ export default function Home() {
   // use State variable
   const songs = context.songs;
   const [loading, setLoading] = useState(true);
-  // const [cssLoaded, setCssLoaded] = useState(false);
 
   // use effect
   useEffect(() => {

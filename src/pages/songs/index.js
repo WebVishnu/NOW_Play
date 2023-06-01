@@ -1,8 +1,8 @@
-import Music_Card from "@/components/Music_Card";
+import AppContext from "@/context/AppContext";
 import React, { useState, useEffect, useContext } from "react";
 
-import Album_Card_Skeleton from "@/components/Album_Card_Skeleton";
-import AppContext from "@/context/AppContext";
+import Music_Card from "@/components/Music_Card";
+import Album_Card_Skeleton from "@/components/Song_Card_Skeleton";
 
 const Songs = () => {
   const context = useContext(AppContext);
