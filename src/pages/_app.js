@@ -69,7 +69,7 @@ export default function App({ Component, pageProps, session }) {
         <Navbar handleShowSearchArea={handleShowSearchArea} />
         {showPlayer && <Playbar audio={audio} />}
         <Component {...pageProps} />
-        {showSearchArea && shouldExcludeComponent && (
+        {showSearchArea && (
           <HotKeys
           keyMap={{
             handleSearchArea: "Escape",
