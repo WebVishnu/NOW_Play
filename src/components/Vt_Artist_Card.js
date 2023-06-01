@@ -16,7 +16,7 @@ const Vt_Artist_Card = (props) => {
 
   return (
     <div
-      className={`${randomClass} relative cursor-pointer border-black border-[4px] sm:w-fit w-[10em]  ${
+      className={`${randomClass} relative cursor-pointer border-black border-[4px] sm:w-fit w-[10em] rounded-lg  ${
         dosis.className
       } flex items-center flex-col  p-3 sm:m-4 m-1 md:mt-12 `}
     >

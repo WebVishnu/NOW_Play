@@ -4,7 +4,6 @@ import { useState } from "react";
 
 const ProfileDropdownMenu = () => {
   const { data: session, status } = useSession();
-  console.log(session);
   const [isOpen, setIsOpen] = useState(false);
 
   const toggleDropdown = () => {
@@ -14,8 +13,8 @@ const ProfileDropdownMenu = () => {
   if (status === "loading") {
     // Render a loading state or placeholder
     return (
-      <div class="flex justify-center items-center">
-        <div class="animate-spin rounded-full h-16 w-16 border-t-2 border-b-2 border-gray-900"></div>
+      <div className="flex justify-center items-center">
+        <div className="animate-spin rounded-full h-16 w-16 border-t-2 border-b-2 border-gray-900"></div>
       </div>
     );
   }

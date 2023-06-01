@@ -17,7 +17,6 @@ const Music_Card = (props) => {
     setRandomClass(`overlay_am_border_${getRandomColour()}`);
     setrandomLeft(num);
   }, []);
-
   return (
     <div
       onClick={() => {
@@ -37,7 +36,7 @@ const Music_Card = (props) => {
           : randomleft < 15
           ? `rotate-[2deg]`
           : `rotate-[1deg]`
-      } relative cursor-pointer border-black border-[4px] sm:w-fit w-[10em]  ${
+      } relative cursor-pointer border-black border-[4px] sm:w-fit w-[10em] rounded-lg  ${
         dosis.className
       } flex items-center flex-col  p-2 sm:m-4 m-1 mt-12 `}
     >
@@ -96,5 +95,6 @@ function formatTime(milliseconds) {
 
   return `${formattedMinutes}:${formattedSeconds}`;
 }
+
 
 export default Music_Card;
