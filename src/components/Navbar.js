@@ -55,7 +55,6 @@ const Navbar = ({ handleShowSearchArea }) => {
           <input
             type="text"
             placeholder="Search music..."
-            disabled
             className="w-full border-4 border-black rounded-tr-xl rounded-br-xl px-4 py-4 outline-0 text-2xl cursor-pointer"
           />
         </div>
