@@ -5,6 +5,7 @@ import AppContext from "@/context/AppContext";
 const dosis = Dosis({ subsets: ["latin"], weight: ["600"] });
 const salsa = Salsa({ subsets: ["latin"], weight: ["400"] });
 let timer;
+const MAX_PREVIEW_SECONDS = 30;
 
 const Playbar = (props) => {
   const context = useContext(AppContext);
@@ -12,10 +13,10 @@ const Playbar = (props) => {
 
   useEffect(() => {
     startInterval();
-    if (seconds === 28) {
+    if (seconds >= MAX_PREVIEW_SECONDS) {
       context.pauseSong();
       context.setShowPlayer(false);
-      clearInterval(timer); // Clear the interval when the seconds reach 30
+      clearInterval(timer); // Clear the interval when the seconds reach limit
     }
     return () => clearInterval(timer);
   }, [seconds]);
@@ -34,8 +35,7 @@ const Playbar = (props) => {
 
   function startInterval() {
     timer = setInterval(() => {
-      let newSec = seconds + 1;
-      setSeconds(newSec);
+      setSeconds((s) => s + 1);
     }, 1000);
   }
 
@@ -51,8 +51,9 @@ const Playbar = (props) => {
   }
 
   const formattedTime = `${convertSecondsToTime(seconds)}`;
+  const progress = (seconds / MAX_PREVIEW_SECONDS) * 100;
   return (
-    <div className="fixed bottom-7 flex left-1/2 transform -translate-x-1/2 md:w-[70vw] w-[90vw] p-2 bg-[var(--secondary-color)] border border-black rounded-lg overlay_fixed_border_white items-center justify-between z-10">
+    <div className="fixed bottom-7 flex left-1/2 transform -translate-x-1/2 md:w-[70vw] w-[90vw] p-2 bg-[var(--secondary-color)] border border-black rounded-lg overlay_fixed_border_white items-center justify-between z-10 relative">
       <div className="flex items-center">
         <Image
         priority
@@ -127,6 +128,12 @@ const Playbar = (props) => {
           className={`bi bi-x text-5xl hover:text-white cursor-pointer`}
           onClick={closePlayer}
         ></i>
+      </div>
+      <div className="absolute bottom-0 left-0 right-0 h-1 bg-gray-300 rounded-b-lg overflow-hidden">
+        <div
+          className="h-full bg-black"
+          style={{ width: `${progress}%` }}
+        ></div>
       </div>
     </div>
   );
